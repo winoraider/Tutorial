@@ -1,13 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    //bool Deathblow = false;
+    public Text scoreText;
+    public int score;
+    public int point;
     private float horizontalInput;
     [SerializeField] private float speed;
     [SerializeField] private float xRange;
-    [SerializeField] private GameObject projectilePrefab;//食べ物プレハブ（あとで複製）
+    [SerializeField] private GameObject[] projectilePrefab;//食べ物プレハブ（あとで複製）
+    void Start()
+    {
+        score = 0;
+        SetCountText();
+    }
     void Update()
     {
         horizontalInput = Input.GetAxis("Horizontal");
@@ -26,10 +36,25 @@ public class PlayerController : MonoBehaviour
         //スペースキーが押されたら
         if(Input.GetKeyDown(KeyCode.Space)) {
             //ここで食べ物を複製する（この使い方、というかメソッド名覚えて！）
-            Instantiate(    projectilePrefab, 
+            Instantiate(    projectilePrefab[0], 
                             transform.position,
-                            projectilePrefab.transform.rotation);
+                            projectilePrefab[0].transform.rotation);
         }
-
+        if(point >= 5)
+        {
+            //Deathblow = true;
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                Instantiate(projectilePrefab[1],
+                            transform.position,
+                            projectilePrefab[1].transform.rotation);
+                point = 0;
+                //Deathblow = false;
+            }
+        }
+    }
+    public void SetCountText()
+    {
+        scoreText.text = "Score: " + score.ToString();
     }
 }
