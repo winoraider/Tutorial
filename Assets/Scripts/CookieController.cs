@@ -24,7 +24,6 @@ public class CookieController : MonoBehaviour
         pc = player.GetComponent<PlayerController>();
         pc.score = pc.score + 1;
         pc.SetCountText();
-        pc.point = pc.point + 1;
 
         Destroy(other.gameObject);
     }

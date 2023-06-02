@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    //bool Deathblow = false;
+    float elapsedTime;
+    bool counter_flag = false;
     public Text scoreText;
     public int score;
     public int point;
@@ -49,8 +50,19 @@ public class PlayerController : MonoBehaviour
                             transform.position,
                             projectilePrefab[1].transform.rotation);
                 point = 0;
+                counter_flag = true;
                 //Deathblow = false;
             }
+        }
+        if(counter_flag == true)
+        {
+            elapsedTime += Time.deltaTime;
+        }
+        if(elapsedTime >= 10)
+        {
+            Destroy(gameObject);
+            counter_flag = false;
+            elapsedTime = 0;
         }
     }
     public void SetCountText()
